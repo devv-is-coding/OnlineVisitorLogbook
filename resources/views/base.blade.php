@@ -19,9 +19,9 @@
     <div class="container">
         @yield('content')
     </div>
-
-    <footer class="text-center mt-4 mb-4">
-        <small>&copy; {{ date('Y') }} Student App</small>
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 mt-4">
+        <small>© {{ date('Y') }} Visitor Logbook System</small>
     </footer>
 </body>
 </html>
