@@ -27,7 +27,6 @@ class AuthController extends Controller
         $admin = Admin::where('email', $request->email)
                       ->orWhere('username', $request->email)
                       ->first();
-
         if ($admin && Hash::check($request->password, $admin->password)) {
             Auth::guard('admin')->login($admin);
             Session::put('id', $admin->id);
