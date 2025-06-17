@@ -9,11 +9,11 @@
         <a href="{{ url('/') }}" class="btn btn-primary">Add New Visitor</a>
     </div>
 
-    @if(session('success'))
+    @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    @if($visitors->isEmpty())
+    @if ($visitors->isEmpty())
         <div class="alert alert-info">No visitor records found.</div>
     @else
         <div class="table-responsive">
@@ -31,7 +31,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($visitors as $index => $visitor)
+                    @foreach ($visitors as $index => $visitor)
                         <tr>
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $visitor->firstname }} {{ $visitor->middlename }} {{ $visitor->lastname }}</td>
@@ -40,7 +40,7 @@
                             <td>{{ $visitor->contact_number }}</td>
                             <td>{{ $visitor->purpose_of_visit }}</td>
                             <td>{{ $visitor->created_at }}</td>
-                            <td>{{ $visitor->time_out}}</td>
+                            <td>{{ $visitor->time_out }}</td>
                         </tr>
                     @endforeach
                 </tbody>
