@@ -12,7 +12,6 @@ class VisitorController extends Controller
         $visitors = Visitor::all();
         return view('layouts.ViewVisitors', compact('visitors'));
     }
-
     public function create()
     {
         return view('layouts.CreateVisitor');

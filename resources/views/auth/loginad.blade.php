@@ -26,27 +26,29 @@
                 <div class="card p-4">
                     <h3 class="text-center mb-4">Admin Login</h3>
 
-                    @if (session('sucess'))
+                    @if (session('success'))
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
                     @if (session('error'))
                         <div class="alert alert-danger">{{ session('error') }}</div>
                     @endif
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route('adminLogin') }}">
                         @csrf
+                        <!-- Email -->
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
                             <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
-                                name="email" value="{{ old('email') }}" placeholder="Enter your email" required>
+                                name="email" value="{{ old('email') }}" required>
                             @error('email')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
 
+                        <!-- Password -->
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
                             <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                id="password" name="password" placeholder="Enter your password" required>
+                                id="password" name="password" required>
                             @error('password')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
@@ -56,6 +58,7 @@
                             <button type="submit" class="btn btn-primary">Login</button>
                         </div>
                     </form>
+
 
                     <p class="mt-3 text-center text-muted">
                         &copy; {{ date('Y') }} Admin Panel

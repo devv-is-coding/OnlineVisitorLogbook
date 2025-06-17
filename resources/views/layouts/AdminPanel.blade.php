@@ -1,22 +1,11 @@
-@extends('base')
+@extends('adminbase')
 
 @section('title', 'Admin Panel')
 
 @section('content')
- <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-        <div class="container">
-            <a class="navbar-brand" href="#">Online Visitor Log</a>
-            <div class="ms-auto">
-                <a href="{{ route('login') }}" class="btn btn-outline-light">Login as Admin</a>
-            </div>
-        </div>
-    </nav>
-    <!-- Visitor Table Section -->
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Visitor Logbook</h2>
-        <a href="{{ route('create') }}" class="btn btn-primary" target="_blank">Add New Visitor</a>
+        <h2>Admin Panel</h2>
     </div>
-    
 
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -37,6 +26,7 @@
                         <th>Purpose</th>
                         <th>Time In</th>
                         <th>Time Out</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,6 +40,9 @@
                             <td>{{ $visitor->purpose_of_visit }}</td>
                             <td>{{ $visitor->created_at }}</td>
                             <td>{{ $visitor->time_out }}</td>
+                            <td>
+                                <!-- Actions can be added here -->
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
