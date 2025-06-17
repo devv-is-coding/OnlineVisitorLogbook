@@ -6,8 +6,9 @@
     <!-- Visitor Table Section -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Visitor Logbook</h2>
-        <a href="{{ url('/') }}" class="btn btn-primary">Add New Visitor</a>
+        <a href="{{ route('create') }}" class="btn btn-primary" target="_blank">Add New Visitor</a>
     </div>
+    
 
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Admin;
+use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
    public function showLoginForm()
@@ -24,7 +25,7 @@ class AuthController extends Controller
             ->orWhere('username', $credentials['email'])
             ->first();
 
-        if ($admin && $credentials['password'] === $admin->password) {
+        if ($admin && Hash::check($credentials['password'], $admin->password)) {
             session(['admin_id' => $admin->id]);
             return redirect('/');
         }
