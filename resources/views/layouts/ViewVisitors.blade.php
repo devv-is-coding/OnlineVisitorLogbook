@@ -3,7 +3,7 @@
 @section('title', 'Admin Panel')
 
 @section('content')
- <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
         <div class="container">
             <a class="navbar-brand" href="#">Online Visitor Log</a>
             <div class="ms-auto">
@@ -16,7 +16,7 @@
         <h2>Visitor Logbook</h2>
         <a href="{{ route('create') }}" class="btn btn-primary" target="_blank">Add New Visitor</a>
     </div>
-    
+
 
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -37,6 +37,7 @@
                         <th>Purpose</th>
                         <th>Time In</th>
                         <th>Time Out</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,6 +51,12 @@
                             <td>{{ $visitor->purpose_of_visit }}</td>
                             <td>{{ $visitor->created_at }}</td>
                             <td>{{ $visitor->time_out }}</td>
+                            <td class="d-flex gap-2">
+                                <a href="{{ route('edit', $visitor->id) }}" class="btn btn-sm btn-secondary">
+                                    Edit
+                                </a>
+                            </td>
+
                         </tr>
                     @endforeach
                 </tbody>

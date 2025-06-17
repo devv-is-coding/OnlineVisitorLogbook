@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('sex');
             $table->string('purpose_of_visit');
             $table->bigInteger('contact_number');
+            $table->timestamp('time_out')->nullable();
             $table->timestamps();
         });
     }

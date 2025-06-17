@@ -40,9 +40,28 @@
                             <td>{{ $visitor->purpose_of_visit }}</td>
                             <td>{{ $visitor->created_at }}</td>
                             <td>{{ $visitor->time_out }}</td>
-                            <td>
-                                <!-- Actions can be added here -->
+                            <td class="d-flex gap-2">
+                                <!-- Mark as Timeout -->
+                                <form action="{{ route('timeout', $visitor->id) }}" method="POST"
+                                    onsubmit="return confirm('Mark this visitor as timed out?');">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button type="submit" class="btn btn-sm btn-warning">
+                                        <i class="bi bi-clock-history"></i> Timeout
+                                    </button>
+                                </form>
+
+                                <!-- Delete -->
+                                <form action="{{ route('delete', $visitor->id) }}" method="POST"
+                                    onsubmit="return confirm('Are you sure you want to delete this record?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </button>
+                                </form>
                             </td>
+
                         </tr>
                     @endforeach
                 </tbody>
