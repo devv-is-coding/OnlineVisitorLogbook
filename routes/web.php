@@ -19,7 +19,7 @@ Route::post('/adminLogin', [AuthController::class, 'login'])->name('adminLogin')
 
 Route::middleware(AuthCheck::class)->group(function () {
     Route::get('/adminPanel',   [AdminController::class, 'adminPanel'])->name('adminPanel');
-    Route::post('/adminLogout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('/adminLogout', [AuthController::class, 'logout'])->name('logout')->middleware('auth:sanctum');
     Route::patch('/visitors/{visitor}/timeout', [VisitorController::class, 'timeout'])->name('timeout');
     Route::delete('/visitors/{visitor}', [VisitorController::class, 'destroy'])->name('delete');
 });

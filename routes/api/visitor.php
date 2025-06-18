@@ -11,3 +11,4 @@ Route::prefix('visitor')->controller(VisitorApiController::class)->group(functio
     Route::patch('/{visitor}/timeout', 'timeout');
     Route::delete('/{visitor}', 'destroy');
 });
+

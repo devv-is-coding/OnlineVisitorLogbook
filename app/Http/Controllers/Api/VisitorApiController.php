@@ -32,8 +32,21 @@ class VisitorApiController extends Controller
 
     public function timeout(Visitor $visitor)
     {
-        $visitor->update(['timeout' => now()]);
-        return response()->json($visitor);
+        // Ignore if already signed‑out
+        if ($visitor->time_out) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Visitor already signed out.',
+            ], 422);
+        }
+
+        $visitor->time_out = now();
+        $visitor->save();
+
+        return response()->json([
+            'success' => true,
+            'visitor' => $visitor,
+        ]);
     }
 
     public function destroy(Visitor $visitor)

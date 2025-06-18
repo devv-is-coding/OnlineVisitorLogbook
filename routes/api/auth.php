@@ -3,9 +3,10 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->controller(AuthController::class)->group(function () {
+    // Public login endpoint
     Route::post('/adminLogin', 'login');
-  });
-  Route::prefix('auth')->middleware('auth:sanctum')->controller(AuthController::class)->group(function () {
-    Route::post('/adminLogout', 'logout');
-  });
 
+    // Logout endpoint — no Sanctum middleware
+    // (the controller still uses Auth::guard('admin'))
+    Route::post('/adminLogout', 'logout');
+});

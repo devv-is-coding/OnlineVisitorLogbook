@@ -67,6 +67,7 @@ class VisitorController extends Controller
         $visitor->time_out = Carbon::now();
         $visitor->save();
         return redirect()->route('adminPanel')->with('success', 'Visitor marked as timed out.');
+        return response()->json(['success' => true]);
     }
     public function destroy(Visitor $visitor)
     {
