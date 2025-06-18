@@ -12,8 +12,8 @@
         @yield('content')
     </div>
 
-    <footer class="bg-dark text-white text-center py-3 mt-4">
+    <footer class="bg-dark text-white text-center py-3 w-100" style="position: fixed; bottom: 0; left: 0; z-index: 1030;">
         <small>© {{ date('Y') }} Visitor Logbook System</small>
-    </footer>
+    </footer>    
 </body>
 </html>
