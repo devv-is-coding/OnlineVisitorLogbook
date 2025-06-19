@@ -41,6 +41,7 @@
                             <td>{{ $visitor->created_at }}</td>
                             <td>{{ $visitor->time_out }}</td>
                             <td class="d-flex gap-2">
+                                
                                 <!-- Mark as Timeout -->
                                 <form action="{{ route('timeout', $visitor->id) }}" method="POST"
                                     onsubmit="return confirm('Mark this visitor as timed out?');">
