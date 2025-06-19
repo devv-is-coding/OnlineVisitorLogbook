@@ -69,6 +69,7 @@ class VisitorController extends Controller
         return redirect()->route('adminPanel')->with('success', 'Visitor marked as timed out.');
         return response()->json(['success' => true]);
     }
+    
     public function destroy(Visitor $visitor)
     {
         $visitor->delete();

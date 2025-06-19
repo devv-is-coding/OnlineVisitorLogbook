@@ -12,8 +12,7 @@ class AdminController extends Controller
     {
         $admins   = Admin::all();
         $visitors = Visitor::latest()->get();
-
-        // If this is an AJAX/API call, return JSON:
+        
         if ($request->expectsJson()) {
             return response()->json([
                 'success' => true,
@@ -24,7 +23,6 @@ class AdminController extends Controller
             ]);
         }
 
-        // Otherwise, render your Blade view as before:
-        return view('adminPanel', compact('admins', 'visitors'));
+        return view('layouts.AdminPanel', compact('admins', 'visitors'));
     }
 }
