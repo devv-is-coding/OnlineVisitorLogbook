@@ -34,12 +34,12 @@
                         <tr>
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $visitor->firstname }} {{ $visitor->middlename }} {{ $visitor->lastname }}</td>
-                            <td>{{ $visitor->sex }}</td>
+                            <td>{{ $visitor->sexes->first()->sex ?? 'N/A' }}</td>
                             <td>{{ $visitor->age }}</td>
                             <td>{{ $visitor->contact_number }}</td>
                             <td>{{ $visitor->purpose_of_visit }}</td>
                             <td>{{ $visitor->created_at }}</td>
-                            <td>{{ $visitor->time_out }}</td>
+                            <td>{{ $visitor->time_out ?? '—' }}</td>
                             <td class="d-flex gap-2">
                                 
                                 <!-- Mark as Timeout -->

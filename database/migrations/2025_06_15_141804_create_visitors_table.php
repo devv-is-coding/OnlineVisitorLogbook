@@ -14,11 +14,11 @@ return new class extends Migration
             $table->string('middlename')->nullable();
             $table->string('lastname');
             $table->integer('age');
-            $table->string('sex');
             $table->string('purpose_of_visit');
             $table->bigInteger('contact_number');
             $table->timestamp('time_out')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
     public function down(): void

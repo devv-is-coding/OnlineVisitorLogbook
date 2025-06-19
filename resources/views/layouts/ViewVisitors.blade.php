@@ -11,12 +11,11 @@
             </div>
         </div>
     </nav>
-    <!-- Visitor Table Section -->
+
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Visitor Logbook</h2>
         <a href="{{ route('create') }}" class="btn btn-primary" target="_blank">Add New Visitor</a>
     </div>
-
 
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -45,18 +44,17 @@
                         <tr>
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $visitor->firstname }} {{ $visitor->middlename }} {{ $visitor->lastname }}</td>
-                            <td>{{ $visitor->sex }}</td>
+                            <td>{{ $visitor->sexes->first()->sex ?? 'N/A' }}</td>
                             <td>{{ $visitor->age }}</td>
                             <td>{{ $visitor->contact_number }}</td>
                             <td>{{ $visitor->purpose_of_visit }}</td>
                             <td>{{ $visitor->created_at }}</td>
-                            <td>{{ $visitor->time_out }}</td>
+                            <td>{{ $visitor->time_out ?? '—' }}</td>
                             <td class="d-flex gap-2">
                                 <a href="{{ route('edit', $visitor->id) }}" class="btn btn-sm btn-secondary">
                                     Edit
                                 </a>
                             </td>
-
                         </tr>
                     @endforeach
                 </tbody>

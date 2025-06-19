@@ -8,20 +8,28 @@ use Illuminate\Database\Seeder;
 use App\Models\Visitor;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Sex;
+
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        Visitor::create([
-            'firstname' => 'Devin',
-            'middlename' => 'P.',
-            'lastname' => 'Bendano',
+        $this->call([
+            SexSeeder::class
+        ]);
+        
+        $visitor = Visitor::create([
+            'firstname' => 'John',
+            'middlename' => 'Smith',
+            'lastname' => 'Doe',
             'age' => 20,
-            'sex' => 'Male',
             'purpose_of_visit' => 'Business',
             'contact_number' => '09123456789',
         ]);
+        $visitorSex = Sex::where('sex', 'Male')->first();
+        $visitor->sexes()->attach($visitorSex->id);
+
         Admin::create([
             'username' => 'admin',
             'email' => 'admin@me.com',
