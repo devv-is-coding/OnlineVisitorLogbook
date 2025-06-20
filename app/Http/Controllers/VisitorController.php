@@ -9,24 +9,50 @@ use App\Models\Sex;
 
 class VisitorController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $visitors = Visitor::all();
+        $visitors = Visitor::with('sexes')->get();
+
+        if ($request->expectsJson()) {
+            return response()->json($visitors);
+        }
+
         return view('layouts.ViewVisitors', compact('visitors'));
     }
-    public function create()
+
+    public function create(Request $request)
     {
+        $sexes = Sex::all();
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'sexes' => $sexes
+            ]);
+        }
+
         return view('layouts.CreateVisitor', [
-            'sexes' => Sex::all(),
+            'sexes' => $sexes
         ]);
     }
-    public function edit(Visitor $visitor)
+
+    public function edit(Request $request,Visitor $visitor)
     {
+        $visitor->load('sexes');
+        $sexes =Sex::all();
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'visitor' => $visitor,
+                'sexes'   => $sexes
+            ]);
+        }
+
         return view('layouts.UpdateVisitor', [
-            'visitor' => $visitor->load('sexes'),
-            'sexes'   => Sex::all(),
+            'visitor' => $visitor,
+            'sexes'   => $sexes
         ]);
     }
+
 
     public function store(Request $request)
     {
@@ -70,6 +96,10 @@ class VisitorController extends Controller
         $visitor->sexes()->sync([$request->sex_id]);
 
         return redirect()->route('home')->with('success', 'Visitor updated successfully.');
+        return response()->json([
+            'visitor' => $visitor,
+            'sexes' => Sex::all()
+        ]);
     }
     public function timeout(Visitor $visitor)
     {

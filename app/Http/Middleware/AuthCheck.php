@@ -10,7 +10,7 @@ class AuthCheck
     public function handle(Request $request, Closure $next)
     {
         if (!Session::has('id')) {
-            return redirect()->route('login')->with('error', 'Please login first.');
+            return redirect()->route('adminLogin')->with('error', 'Please login first.');
         }
         return $next($request);
     }

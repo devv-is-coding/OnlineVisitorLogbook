@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;    
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -19,7 +20,7 @@ class AuthController extends Controller
         return view('auth.loginad');
     }
 
-    public function login(Request $request)
+    public function adminSubmitLogin(Request $request)
     {
         $request->validate([
             'email'    => 'required|string',
@@ -55,12 +56,10 @@ class AuthController extends Controller
                 'data'    => $admin,
             ], 200);
         }
+        Log::info('Session from login request:', session()->all());
 
-        return redirect()
-            ->route('adminPanel')
-            ->with('success', 'Logged in successfully.');
+        return redirect()->route('adminPanel')->with('success', 'Logged in successfully.');
     }
-
     public function logout(Request $request)
     {
         Auth::guard('admin')->logout();
@@ -76,7 +75,7 @@ class AuthController extends Controller
         }
 
         return redirect()
-            ->route('login')
+            ->route('home')
             ->with('success', 'Logged out successfully.');
     }
     
