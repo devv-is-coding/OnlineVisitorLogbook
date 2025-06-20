@@ -11,8 +11,7 @@ class AdminController extends Controller
     public function adminPanel(Request $request)
     {
         $admins   = Admin::all();
-        $visitors = Visitor::latest()->get();
-        
+        $visitors = Visitor::with('sexes')->latest()->get();
         if ($request->expectsJson()) {
             return response()->json([
                 'success' => true,
@@ -22,7 +21,6 @@ class AdminController extends Controller
                 ],
             ]);
         }
-
         return view('layouts.AdminPanel', compact('admins', 'visitors'));
     }
 }

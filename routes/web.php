@@ -13,13 +13,16 @@ Route::post('/visitors', [VisitorController::class, 'store'])->name('store');
 Route::get('/visitors/{visitor}/edit', [VisitorController::class, 'edit'])->name('edit');
 Route::patch('/visitors/{visitor}', [VisitorController::class, 'update'])->name('update');
 
+Route::get('/login', function () {
+    return redirect()->route('adminLogin');
+})->name('login');
 
-Route::get('/adminLogin', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/adminLogin', [AuthController::class, 'login'])->name('adminLogin');
+Route::get('/adminLogin', [AuthController::class, 'showLoginForm'])->name('adminLogin');
+Route::post('/adminSubmitLogin', [AuthController::class, 'adminSubmitLogin'])->name('adminSubmitLogin');
 
 Route::middleware(AuthCheck::class)->group(function () {
     Route::get('/adminPanel',   [AdminController::class, 'adminPanel'])->name('adminPanel');
-    Route::post('/adminLogout', [AuthController::class, 'logout'])->name('logout')->middleware('auth:sanctum');
+    Route::post('/adminLogout', [AuthController::class, 'logout'])->name('logout');
     Route::patch('/visitors/{visitor}/timeout', [VisitorController::class, 'timeout'])->name('timeout');
     Route::delete('/visitors/{visitor}', [VisitorController::class, 'destroy'])->name('delete');
 });

@@ -7,7 +7,7 @@
         <div class="container">
             <a class="navbar-brand" href="#">Online Visitor Log</a>
             <div class="ms-auto">
-                <a href="{{ route('login') }}" class="btn btn-outline-light">Login as Admin</a>
+                <a href="{{ route('adminLogin') }}" class="btn btn-outline-light">Login as Admin</a>
             </div>
         </div>
     </nav>

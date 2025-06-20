@@ -32,7 +32,7 @@
                     @if (session('error'))
                         <div class="alert alert-danger">{{ session('error') }}</div>
                     @endif
-                    <form method="POST" action="{{ route('adminLogin') }}">
+                    <form method="POST" action="{{ route('adminSubmitLogin') }}">
                         @csrf
                         <!-- Email -->
                         <div class="mb-3">
