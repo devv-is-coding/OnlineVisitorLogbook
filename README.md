@@ -20,7 +20,8 @@ Follow these steps to set up and run the project locally:
 ### 1. Clone the Repository
 bash
 git clone https://github.com/devv-is-coding/OnlineVisitorLogbook.git
-cd OnlineVisitorLogbook`
+
+cd OnlineVisitorLogbook
 
 ### 2. Install Backend & Frontend Dependencies
 bash
@@ -38,28 +39,31 @@ php artisan key:generate
 
 Edit your `.env` file with the correct database credentials:
 env
+
 DB_CONNECTION=mysql
+
 DB_HOST=127.0.0.1
+
 DB_PORT=3306
+
 DB_DATABASE=your_database
+
 DB_USERNAME=your_username
+
 DB_PASSWORD=your_password
+
 
 Then run the migrations:
 bash
 php artisan migrate
 
-### 5. Seed the Database (Optional)
+### 5. Seed the Database
 
 Populate your database with initial data:
 bash
 php artisan db:seed
 
-### 6. Link Storage (If needed for file uploads)
-bash
-php artisan storage:link
-
-### 7. Start the Development Server
+### 6. Start the Development Server
 bash
 composer run dev
 
