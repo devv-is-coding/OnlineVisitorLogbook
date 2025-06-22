@@ -14,6 +14,7 @@ return new class extends Migration
             $table->string('middlename')->nullable();
             $table->string('lastname');
             $table->integer('age');
+            $table->foreignId('sex_id')->constrained('sexes')->onDelete('cascade');
             $table->string('purpose_of_visit');
             $table->bigInteger('contact_number');
             $table->timestamp('time_out')->nullable();

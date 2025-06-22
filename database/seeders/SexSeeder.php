@@ -11,9 +11,10 @@ class SexSeeder extends Seeder
 
     public function run(): void
     {
-        $sexes = ['Male', 'Female', 'Prefer not to say'];
-        foreach ($sexes as $sex) {
-            Sex::create(['sex' => $sex]);
-        }
+        Sex::insert([
+            ['sex' => 'Male'],
+            ['sex' => 'Female'],
+            ['sex' => 'Prefer not to say'],
+        ]);
     }
 }
