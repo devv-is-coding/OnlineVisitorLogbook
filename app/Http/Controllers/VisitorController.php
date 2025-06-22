@@ -11,7 +11,20 @@ class VisitorController extends Controller
 {
     public function index(Request $request)
     {
-        $visitors = Visitor::with('sex')->get();
+        $query = Visitor::with('sex');
+
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('firstname', 'like', "%$search%")
+                    ->orWhere('middlename', 'like', "%$search%")
+                    ->orWhere('lastname', 'like', "%$search%")
+                    ->orWhere('contact_number', 'like', "%$search%")
+                    ->orWhere('purpose_of_visit', 'like', "%$search%");
+            });
+        }
+
+        $visitors = $query->get();
 
         if ($request->expectsJson()) {
             return response()->json($visitors);
@@ -19,6 +32,7 @@ class VisitorController extends Controller
 
         return view('layouts.ViewVisitors', compact('visitors'));
     }
+
 
     public function create(Request $request)
     {
@@ -35,10 +49,10 @@ class VisitorController extends Controller
         ]);
     }
 
-    public function edit(Request $request,Visitor $visitor)
+    public function edit(Request $request, Visitor $visitor)
     {
         $visitor->load('sex');
-        $sexes =Sex::all();
+        $sexes = Sex::all();
 
         if ($request->expectsJson()) {
             return response()->json([
