@@ -10,4 +10,9 @@ class Sex extends Model
     protected $table = 'sexes';
     protected $fillable = ['sex'];
 
+    public function visitors()
+    {
+        return $this->hasMany(Visitor::class);
+    }
+
 }

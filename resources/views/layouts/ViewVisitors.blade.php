@@ -7,14 +7,14 @@
         <div class="container">
             <a class="navbar-brand" href="#">Online Visitor Log</a>
             <div class="ms-auto">
-                <a href="{{ route('adminLogin') }}" class="btn btn-outline-light">Login as Admin</a>
+                <a href="{{ route('login') }}" class="btn btn-outline-light">Login as Admin</a>
             </div>
         </div>
     </nav>
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Visitor Logbook</h2>
-        <a href="{{ route('create') }}" class="btn btn-primary" target="_blank">Add New Visitor</a>
+        <a href="{{ route('create') }}" class="btn btn-primary">Add New Visitor</a>
     </div>
 
     @if (session('success'))
@@ -44,7 +44,7 @@
                         <tr>
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $visitor->firstname }} {{ $visitor->middlename }} {{ $visitor->lastname }}</td>
-                            <td>{{ $visitor->sexes->first()->sex ?? 'N/A' }}</td>
+                            <td>{{ $visitor->sex->sex ?? 'N/A' }}</td>
                             <td>{{ $visitor->age }}</td>
                             <td>{{ $visitor->contact_number }}</td>
                             <td>{{ $visitor->purpose_of_visit }}</td>

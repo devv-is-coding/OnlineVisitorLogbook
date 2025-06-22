@@ -11,7 +11,7 @@ class VisitorController extends Controller
 {
     public function index(Request $request)
     {
-        $visitors = Visitor::with('sexes')->get();
+        $visitors = Visitor::with('sex')->get();
 
         if ($request->expectsJson()) {
             return response()->json($visitors);
@@ -37,7 +37,7 @@ class VisitorController extends Controller
 
     public function edit(Request $request,Visitor $visitor)
     {
-        $visitor->load('sexes');
+        $visitor->load('sex');
         $sexes =Sex::all();
 
         if ($request->expectsJson()) {
@@ -66,18 +66,16 @@ class VisitorController extends Controller
             'purpose_of_visit' => 'required|string|max:500',
         ]);
 
-        $visitor = Visitor::create([
+        Visitor::create([
             'firstname' => $request->firstname,
             'middlename' => $request->middlename,
             'lastname' => $request->lastname,
+            'sex_id' => $request->sex_id,
             'age' => $request->age,
             'contact_number' => $request->contact_number,
             'purpose_of_visit' => $request->purpose_of_visit,
             'time_out' => null,
         ]);
-        $visitor->sexes()->attach($request->sex_id);
-
-
         return redirect()->route('home')->with('success', 'Visitor added successfully!');
     }
     public function update(Request $request, Visitor $visitor)
@@ -93,13 +91,8 @@ class VisitorController extends Controller
         ]);
 
         $visitor->update($data);
-        $visitor->sexes()->sync([$request->sex_id]);
 
         return redirect()->route('home')->with('success', 'Visitor updated successfully.');
-        return response()->json([
-            'visitor' => $visitor,
-            'sexes' => Sex::all()
-        ]);
     }
     public function timeout(Visitor $visitor)
     {

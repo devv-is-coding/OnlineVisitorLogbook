@@ -34,7 +34,7 @@
                         <tr>
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $visitor->firstname }} {{ $visitor->middlename }} {{ $visitor->lastname }}</td>
-                            <td>{{ $visitor->sexes->first()->sex ?? 'N/A' }}</td>
+                            <td>{{ $visitor->sex->sex ?? 'N/A' }}</td>
                             <td>{{ $visitor->age }}</td>
                             <td>{{ $visitor->contact_number }}</td>
                             <td>{{ $visitor->purpose_of_visit }}</td>
@@ -42,7 +42,6 @@
                             <td>{{ $visitor->time_out ?? '—' }}</td>
                             <td class="d-flex gap-2">
                                 
-                                <!-- Mark as Timeout -->
                                 <form action="{{ route('timeout', $visitor->id) }}" method="POST"
                                     onsubmit="return confirm('Mark this visitor as timed out?');">
                                     @csrf
