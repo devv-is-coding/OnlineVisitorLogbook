@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Auth;    
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Log;
 
@@ -28,10 +28,10 @@ class AuthController extends Controller
         ]);
 
         $admin = Admin::where('email', $request->email)
-                      ->orWhere('username', $request->email)
-                      ->first();
+            ->orWhere('username', $request->email)
+            ->first();
 
-        $credentialsOk = $admin 
+        $credentialsOk = $admin
             && Hash::check($request->password, $admin->password);
 
         if (! $credentialsOk) {
@@ -42,6 +42,9 @@ class AuthController extends Controller
                 ], 401);
             }
             return back()->with('error', 'Invalid credentials.');
+        }
+        if ($admin->is_logged_in) {
+            return back()->with('error', 'You are already logged in from another session.');
         }
 
         Auth::guard('admin')->login($admin);
@@ -78,5 +81,4 @@ class AuthController extends Controller
             ->route('home')
             ->with('success', 'Logged out successfully.');
     }
-    
 }
