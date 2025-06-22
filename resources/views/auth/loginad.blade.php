@@ -2,115 +2,131 @@
 
 @section('title', 'Admin Login')
 
+@push('styles')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<style>
+    /* -------------- Layout / background -------------- */
+    body{
+        background:linear-gradient(135deg,#eef2ff,#ffffff);
+    }
+    .login-container{
+        min-height:100vh;
+        display:flex;
+        align-items:flex-start;
+        justify-content:center;
+        padding:6vh 1rem 4vh;
+    }
+
+    /* -------------- Card & badge ---------------------- */
+    .login-card{
+        position:relative;
+        background:#fff;
+        padding:4.5rem 2.5rem 2.5rem;
+        border-radius:1rem;
+        box-shadow:0 1rem 2rem rgba(0,0,0,.08);
+        max-width:440px;width:100%;
+    }
+    .brand-badge{
+        position:absolute;top:-2.25rem;left:50%;transform:translateX(-50%);
+        width:4.5rem;height:4.5rem;border-radius:50%;
+        background:radial-gradient(circle at 30% 30%,#9f7aea 0%,#7c3aed 80%);
+        box-shadow:0 .5rem 1.25rem rgba(0,0,0,.15);
+        display:flex;align-items:center;justify-content:center;
+    }
+    .brand-badge svg{width:28px;height:28px;fill:#fff;}
+
+    /* -------------- Form ----------------------------- */
+    .form-label{font-weight:600;margin-bottom:.25rem}
+
+    /* wrapper = exactly input height, so 50% centering works perfectly */
+    .input-wrapper{position:relative}
+    .input-wrapper .input-icon,
+    .input-wrapper .eye-toggle{
+        position:absolute;top:50%;transform:translateY(-50%);
+        color:#6c757d;font-size:1.1rem;
+    }
+    .input-icon{left:.9rem;pointer-events:none}
+    .eye-toggle{right:.9rem;cursor:pointer}
+
+    .form-control{padding-left:2.6rem;height:2.875rem}
+    .form-control:focus{border-color:#7c3aed;box-shadow:none}
+
+    .btn-purple{background:#7c3aed;border:none;font-weight:500;color:#fff}
+    .btn-purple:hover{background:#6633d4}
+
+    a.text-muted:hover{color:#7c3aed}
+</style>
+@endpush
+
 @section('content')
-<div class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-white via-slate-50 to-slate-100 px-4">
-    <div class="flex flex-col items-center space-y-3">
-        <div class="bg-purple-600 p-3 rounded-full shadow-md">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0-2.21-1.79-4-4-4s-4 1.79-4 4 4 6 4 6 4-3.79 4-6zM12 3c4.42 0 8 3.58 8 8s-3.58 8-8 8-8-3.58-8-8"/>
+<div class="login-container">
+    <div class="login-card">
+
+        {{-- Floating badge / logo --}}
+        <div class="brand-badge" title="Admin Access">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 1.75a9.25 9.25 0 0 0-9.25 9.25c0 7.37 8.12 11.79 8.48 11.97a.75.75 0 0 0 .54 0c.36-.18 8.48-4.6 8.48-11.97A9.25 9.25 0 0 0 12 1.75Zm0 11.5a2.25 2.25 0 1 1 0-4.5 2.25 2.25 0 0 1 0 4.5Z"/>
             </svg>
         </div>
-        <h1 class="text-2xl font-bold text-gray-800">Admin Login</h1>
-        <p class="text-sm text-gray-500">Sign in to access the admin panel</p>
-    </div>
 
-    <div class="bg-white w-full max-w-md mt-6 p-6 rounded-2xl shadow-xl">
-        <div class="mb-6">
-            <div class="flex items-center gap-2 mb-1">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0-2.21-1.79-4-4-4s-4 1.79-4 4 4 6 4 6 4-3.79 4-6z" />
-                </svg>
-                <h2 class="text-lg font-semibold">Administrator Access</h2>
-            </div>
-            <p class="text-sm text-gray-500">Secure login required</p>
-        </div>
+        <h2 class="text-center fw-bold mt-2">Admin Login</h2>
+        <p class="text-center text-muted mb-4">Sign in to access the admin panel securely</p>
 
-        @if (session('success'))
-            <div class="mb-3 p-2 bg-green-100 text-green-700 text-sm rounded">{{ session('success') }}</div>
-        @endif
-        @if (session('error'))
-            <div class="mb-3 p-2 bg-red-100 text-red-700 text-sm rounded">{{ session('error') }}</div>
-        @endif
+        {{-- Flash messages --}}
+        @if(session('success'))   <div class="alert alert-success">{{ session('success') }}</div>@endif
+        @if(session('error'))     <div class="alert alert-danger">{{ session('error') }}</div>@endif
 
-        <form method="POST" action="{{ route('adminSubmitLogin') }}" class="space-y-4">
+        {{-- Login form --}}
+        <form method="POST" action="{{ route('adminSubmitLogin') }}">
             @csrf
 
-            <!-- Email -->
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1" for="email">Email or Username</label>
-                <div class="relative">
-                    <input id="email" name="email" type="email"
-                        class="w-full pl-10 pr-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 @error('email') border-red-500 @enderror"
-                        value="{{ old('email') }}" required>
-                    <div class="absolute left-3 top-2.5 text-gray-400">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M5.121 17.804A13.937 13.937 0 0112 15c2.761 0 5.304.804 7.879 2.195M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                    </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email or Username</label>
+                <div class="input-wrapper">
+                    <i class="bi bi-person-fill input-icon"></i>
+                    <input id="email" name="email" type="text"
+                           class="form-control @error('email') is-invalid @enderror"
+                           value="{{ old('email') }}" required>
                 </div>
-                @error('email')
-                    <small class="text-red-500">{{ $message }}</small>
-                @enderror
+                @error('email') <small class="text-danger">{{ $message }}</small> @enderror
             </div>
 
-            <!-- Password -->
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1" for="password">Password</label>
-                <div class="relative">
+            <div class="mb-4">
+                <label for="password" class="form-label">Password</label>
+                <div class="input-wrapper">
+                    <i class="bi bi-lock-fill input-icon"></i>
                     <input id="password" name="password" type="password"
-                        class="w-full pl-10 pr-10 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 @error('password') border-red-500 @enderror"
-                        required>
-                    <div class="absolute left-3 top-2.5 text-gray-400">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 11c0-2.21-1.79-4-4-4s-4 1.79-4 4 4 6 4 6 4-3.79 4-6z" />
-                        </svg>
-                    </div>
-                    <div class="absolute right-3 top-2.5 text-gray-400 cursor-pointer">
-                        <!-- Password toggle icon (can be hooked up with JS) -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M15 12a3 3 0 01-6 0m6 0a6 6 0 00-12 0 6 6 0 0012 0z" />
-                        </svg>
-                    </div>
+                           class="form-control @error('password') is-invalid @enderror"
+                           required>
+                    <i id="togglePassword" class="bi bi-eye-slash eye-toggle"></i>
                 </div>
-                @error('password')
-                    <small class="text-red-500">{{ $message }}</small>
-                @enderror
+                @error('password') <small class="text-danger">{{ $message }}</small> @enderror
             </div>
 
-            <!-- Submit -->
-            <div>
-                <button type="submit"
-                    class="w-full py-2 bg-purple-600 text-white font-semibold rounded-md hover:bg-purple-700 transition">
-                    <div class="flex justify-center items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M10 6H6a2 2 0 00-2 2v8a2 2 0 002 2h4m6-4l4-4m0 0l-4-4m4 4H10" />
-                        </svg>
-                        Sign In
-                    </div>
-                </button>
-            </div>
+            <button type="submit" class="btn btn-purple w-100 mb-3">
+                <i class="bi bi-box-arrow-in-right me-1"></i> Sign In
+            </button>
         </form>
 
-        <div class="text-center mt-4">
-            <a href="{{ route('home') }}" class="text-sm text-gray-500 hover:text-purple-600 transition flex justify-center items-center gap-1">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M15 19l-7-7 7-7" />
-                </svg>
-                Back to Visitor Log
+        <div class="text-center">
+            <a href="{{ route('home') }}" class="text-decoration-none text-muted">
+                <i class="bi bi-arrow-left-circle"></i> Back to Visitor Log
             </a>
         </div>
 
-        <p class="text-xs text-center text-gray-400 mt-4">&copy; {{ date('Y') }} Admin Panel</p>
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    /* password visibility toggle */
+    const pw   = document.getElementById('password');
+    const tog  = document.getElementById('togglePassword');
+    tog.addEventListener('click', () => {
+        pw.type = pw.type === 'password' ? 'text' : 'password';
+        tog.classList.toggle('bi-eye');
+        tog.classList.toggle('bi-eye-slash');
+    });
+</script>
+@endpush
